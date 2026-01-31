@@ -1,0 +1,36 @@
+.students-table {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.students-table th {
+  background-color: #2c3e50;
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+
+.students-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.students-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.students-table tr:hover {
+  background-color: #e6f2ff;
+  cursor: pointer;
+}
+
+.students-table caption {
+  caption-side: bottom;
+  padding: 10px;
+  font-size: 14px;
+  color: #555;
+}
