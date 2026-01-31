@@ -127,11 +127,7 @@ function Student() {
     <p><b>Age:</b> {student.age}</p>
 
     {student.imagePath && (
-      <img
-        src={`https://student-management-ye13.onrender.com/students/${student.imagePath}`}
-        width="150"
-        alt="student"
-      />
+     <img src={student.imagePath} alt="student" width="150" />
     )}
   </div>
 )}
