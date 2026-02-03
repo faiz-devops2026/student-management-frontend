@@ -1,11 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { connectWebSocket, disconnectWebSocket } from "../websocket";
 import "./Home.css";
+
 function Home() {
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
 
-  useEffect(() => {
+  // 🔄 REST se students load
+  const loadStudents = () => {
     fetch("https://student-management-ye13.onrender.com/students")
       .then((res) => res.json())
       .then((data) => {
@@ -13,6 +16,23 @@ function Home() {
         setStudents(data);
       })
       .catch((err) => console.error(err));
+  };
+
+  useEffect(() => {
+    // initial load
+    loadStudents();
+
+    // 🔌 WebSocket connect
+    connectWebSocket((message) => {
+      console.log("📢 WS message:", message);
+
+      // 🔥 student add and table refresh
+      loadStudents();
+    });
+
+    return () => {
+      disconnectWebSocket();
+    };
   }, []);
 
   return (
@@ -29,27 +49,27 @@ function Home() {
 
       <h2>User from Backend</h2>
 
-<table className="students-table">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Age</th>
-    </tr>
-  </thead>
+      <table className="students-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+          </tr>
+        </thead>
 
-  <tbody>
-    {students.map((student) => (
-      <tr key={student.id}>
-        <td>{student.id}</td>
-        <td>{student.name}</td>
-        <td>{student.age}</td>
-      </tr>
-    ))}
-  </tbody>
+        <tbody>
+          {students.map((student) => (
+            <tr key={student.id}>
+              <td>{student.id}</td>
+              <td>{student.name}</td>
+              <td>{student.age}</td>
+            </tr>
+          ))}
+        </tbody>
 
-  <caption>Student data fetched from Spring Boot backend</caption>
-</table>
+        <caption>Student data fetched from Spring Boot backend</caption>
+      </table>
     </div>
   );
 }
