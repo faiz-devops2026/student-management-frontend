@@ -7,7 +7,7 @@ function Home() {
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
 
-  // 🔄 REST se students load
+  // 🔄 REST students load
   const loadStudents = () => {
     fetch("https://student-management-ye13.onrender.com/students")
       .then((res) => res.json())
